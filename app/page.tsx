@@ -96,6 +96,7 @@ const animais = [
 
 export default function Home() {
   const [slideAtual, setSlideAtual] = useState(0);
+  const [mostrarHistoria, setMostrarHistoria] = useState(false);
   const [animalSelecionado, setAnimalSelecionado] =
     useState<(typeof animais)[number] | null>(null);
 
@@ -256,6 +257,201 @@ export default function Home() {
             ))}
           </div>
         </section>
+        
+        <section className="jornada-adocao" id="como-funciona">
+          <div className="titulo-secao">
+            <span className="etiqueta">Sua jornada começa aqui</span>
+
+            <h2>
+              Adotar é simples, <span>mas muda tudo.</span>
+            </h2>
+
+            <p>
+              Siga os passos e prepare-se para receber um novo amigo
+              na sua vida.
+            </p>
+          </div>
+
+          <div className="jornada-grade">
+            <article className="jornada-card jornada-verde">
+              <span className="jornada-numero">01</span>
+              <span className="jornada-icone">♡</span>
+              <h3>Faça seu login</h3>
+              <p>
+                Crie sua conta na plataforma para conhecer os animais
+                e iniciar sua jornada de adoção.
+              </p>
+            </article>
+
+            <article className="jornada-card jornada-bege">
+              <span className="jornada-numero">02</span>
+              <span className="jornada-icone">🐾</span>
+              <h3>Encontre seu amigo</h3>
+              <p>
+                Explore os perfis disponíveis e encontre um companheiro
+                que combine com sua rotina.
+              </p>
+            </article>
+
+            <article className="jornada-card jornada-rosa">
+              <span className="jornada-numero">03</span>
+              <span className="jornada-icone">📝</span>
+              <h3>Preencha seus dados</h3>
+              <p>
+                Informe seus dados com sinceridade e responsabilidade
+                para ajudar no processo de adoção.
+              </p>
+            </article>
+
+            <article className="jornada-card jornada-lilas">
+              <span className="jornada-numero">04</span>
+              <span className="jornada-icone">✉</span>
+              <h3>Aguarde o contato</h3>
+              <p>
+              A equipe responsável analisará sua solicitação e orientará você sobre as próximas etapas.
+              </p>
+            </article>
+
+            <article className="jornada-card jornada-amarelo">
+              <span className="jornada-numero">05</span>
+              <span className="jornada-icone">♥</span>
+              <h3>Comece uma história</h3>
+              <p>
+                Prepare-se para construir uma relação de confiança.
+                Organize um espaço seguro e esteja pronto para oferecer
+                cuidado, paciência e carinho.
+              </p>
+            </article>
+          </div>
+
+          <div className="jornada-final">
+            <span>♡</span>
+            <p>
+              <strong>Adotar é um compromisso para a vida toda.</strong>
+              <br />
+              Um novo amigo merece cuidado, respeito e amor todos os dias.
+            </p>
+          </div>
+        </section>
+
+                {mostrarHistoria && (
+          <div
+            onClick={() => setMostrarHistoria(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 110,
+              display: "grid",
+              placeItems: "center",
+              padding: "20px",
+              background: "rgba(23, 42, 18, 0.65)",
+            }}
+          >
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="historia-titulo"
+              onClick={(evento) => evento.stopPropagation()}
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "560px",
+                maxHeight: "90vh",
+                overflowY: "auto",
+                padding: "32px",
+                borderRadius: "24px",
+                background: "var(--branco)",
+                color: "var(--marrom)",
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setMostrarHistoria(false)}
+                aria-label="Fechar história"
+                style={{
+                  position: "absolute",
+                  top: "14px",
+                  right: "14px",
+                  width: "36px",
+                  height: "36px",
+                  border: "none",
+                  borderRadius: "50%",
+                  background: "var(--verde-claro)",
+                  color: "var(--verde-escuro)",
+                  cursor: "pointer",
+                  fontSize: "22px",
+                }}
+              >
+                ×
+              </button>
+
+              <span className="etiqueta">Nossa história — Adote um Focinho 🐾</span>
+
+              <h2
+                id="historia-titulo"
+                style={{
+                  margin: "14px 0",
+                  color: "var(--verde-escuro)",
+                  fontFamily: "Nunito, sans-serif",
+                  fontSize: "30px",
+                  lineHeight: 1.2,
+                }}
+              >
+                Todo focinho merece um lar ♡
+              </h2>
+
+              <p style={{ marginBottom: "14px" }}>
+                 Adote um Focinho nasceu como um projeto escolar desenvolvido por alunas do 3º ano do ensino médio 
+                 integrado ao curso técnico do Instituto Federal do Espírito Santo (IFES) — Campus de Alegre. 
+                 A proposta surgiu no contexto da nossa formação acadêmica, unindo os conhecimentos adquiridos na 
+                 área da programação a uma causa que merece atenção e cuidado: a adoção responsável de animais.
+              </p>
+
+              <p style={{ marginBottom: "14px" }}>
+                Durante o desenvolvimento do trabalho, buscamos criar uma plataforma que facilite o contato
+                entre pessoas interessadas em adotar e animais que precisam de um lar. A ideia é oferecer 
+                um espaço organizado e acessível, no qual os usuários possam conhecer os animais disponíveis para adoção, 
+                encontrar informações importantes e compreender melhor as etapas necessárias para adotar.
+              </p>
+
+              <p style={{ marginBottom: "22px" }}>
+                Mais do que desenvolver um site, queremos mostrar como a tecnologia pode ser utilizada 
+                para contribuir com questões sociais e incentivar atitudes positivas. Acreditamos que a
+                adoção deve ser uma decisão consciente, baseada no respeito, 
+                no compromisso e na compreensão de que um animal precisa de cuidados durante toda a sua vida.
+              </p>
+
+              <p style={{ marginBottom: "22px" }}>
+                Por ser um trabalho escolar, o projeto também representa uma oportunidade de 
+                colocar em prática o que aprendemos ao longo do curso, enfrentando desafios, 
+                desenvolvendo habilidades e transformando ideias em algo concreto. 
+                Cada etapa da construção da plataforma faz parte da nossa experiência como estudantes e 
+                futuras profissionais.
+              </p>
+
+              <p style={{ marginBottom: "22px" }}>
+             O Adote um Focinho representa, portanto, a união entre aprendizado, 
+             tecnologia e conscientização. Nosso propósito é contribuir para que
+             mais pessoas conheçam a importância da adoção responsável e 
+             compreendam que todo animal merece cuidado, 
+             proteção e a oportunidade de encontrar um lar onde seja acolhido com carinho.
+              </p>
+
+              <button
+                type="button"
+                className="botao botao-principal"
+                onClick={() => {
+                  setMostrarHistoria(false);
+                  document.getElementById("animais")?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                Quero conhecer os animais ♡
+              </button>
+            </section>
+          </div>
+        )}
 
         {animalSelecionado && (
           <div
@@ -354,8 +550,63 @@ export default function Home() {
                 como os perfis dos animais poderão funcionar.
               </p>
             </section>
+
           </div>
         )}
+                <section className="sobre" id="sobre">
+          <div className="sobre-imagem">
+            <img
+              src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=900&q=85"
+              alt="Pessoa demonstrando carinho por um cachorro"
+            />
+          </div>
+
+          <div className="sobre-texto">
+            <span className="etiqueta">Mais que uma plataforma</span>
+
+            <h2>
+              Todo focinho merece um <span>final feliz.</span>
+            </h2>
+
+            <p>
+              O Adote um Focinho nasceu para aproximar animais que precisam
+              de um lar de pessoas prontas para oferecer cuidado, respeito
+              e amor.
+            </p>
+
+            <p>
+              Cada adoção é uma nova chance. A mudança começa quando alguém
+              decide abrir espaço no coração.
+            </p>
+
+      <button
+          type="button"
+          className="botao botao-claro"
+          onClick={() => setMostrarHistoria(true)}
+        >
+          Conheça nossa missão →
+        </button>
+
+          </div>
+        </section>
+                <footer id="contato">
+          <a href="#inicio" className="logo">
+            <span className="logo-icon">♥</span>
+            <span>
+              adote <small>um focinho</small>
+            </span>
+          </a>
+
+          <p>Conectando corações, transformando vidas.</p>
+
+          <a href="mailto:contato@adoteumfocinho.com.br">
+            Entre em contato ↗
+          </a>
+
+          <div className="rodape-final">
+            © 2026 Adote um Focinho · Feito com carinho ♡
+          </div>
+        </footer>
       </main>
     </>
   );
