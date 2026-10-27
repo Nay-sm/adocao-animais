@@ -1,4 +1,3 @@
-
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
@@ -11,6 +10,17 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    minPasswordLength: 8,
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "adotante",
+        input: false, // o cadastro IGNORA qualquer "role" vindo do navegador
+      },
+    },
   },
   plugins: [nextCookies()],
 });

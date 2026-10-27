@@ -77,10 +77,12 @@ model Animal {
   id            String   @id @default(cuid())
   nome          String
   especie       String
-  descricao     String
+  sexo          String   @default("Não informado")
+  porte         String   @default("Médio")
   idade         Int
+  descricao     String
   fotoUrl       String
-  status        String   @default("disponivel")
+  status        String   @default("disponivel") // disponivel | adotado
   responsavelId String
   responsavel   User     @relation("ResponsavelAnimais", fields: [responsavelId], references: [id])
   pedidos       PedidoAdocao[]
@@ -89,15 +91,18 @@ model Animal {
 }
 
 model PedidoAdocao {
-  id        String   @id @default(cuid())
-  usuarioId String
-  animalId  String
-  mensagem  String?
-  status    String   @default("pendente")
-  usuario   User     @relation(fields: [usuarioId], references: [id])
-  animal    Animal   @relation(fields: [animalId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  usuarioId   String
+  animalId    String
+  telefone    String
+  moradia     String
+  experiencia String
+  motivo      String
+  status      String   @default("pendente") // pendente | aprovado | rejeitado
+  usuario     User     @relation(fields: [usuarioId], references: [id])
+  animal      Animal   @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@unique([usuarioId, animalId])
   @@index([animalId])
