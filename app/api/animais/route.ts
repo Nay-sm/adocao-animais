@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { exigirAdmin } from "@/lib/sessao";
 
 const animalSchema = z.object({
   nome: z.string().trim().min(2, "O nome deve ter pelo menos 2 caracteres.").max(80),
@@ -47,17 +48,17 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    // Confere se o usuário possui uma sessão válida.
-    const sessao = await auth.api.getSession({
-      headers: await headers(),
-    });
+    // Confere se o usuário possui permissão de administrador.
+      let sessao;
 
-    if (!sessao) {
-      return NextResponse.json(
-        { erro: "Você precisa entrar na sua conta para cadastrar um animal." },
-        { status: 401 },
-      );
-    }
+      try {
+        sessao = await exigirAdmin();
+      } catch {
+        return NextResponse.json(
+          { erro: "Apenas administradores podem cadastrar animais." },
+          { status: 403 },
+        );
+      }
 
     // Lê e valida os dados enviados ao servidor.
     let corpo: unknown;
