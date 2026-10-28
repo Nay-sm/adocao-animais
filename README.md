@@ -2,7 +2,7 @@
 
 **Nicho:** Adoção de animais (ONG protetora) · **Grupo:** <nº da planilha>
 **Dupla:** <Nome Nayara de Souza Moraes> (@Nay-sm) · <Nome Sulamita dos Santos Nascimento> (@<usuario-github-da-sulamita>)
-**Sistema no ar:** https://<dominio-real>.vercel.app
+**Sistema no ar:** https://adocao-animais-jade.vercel.app
 
 ## O que o sistema faz
 
