@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Adote um Focinho
 
-## Getting Started
+**Nicho:** Adoção de animais (ONG protetora) · **Grupo:** nº 5
+**Dupla:** Nayara de Souza Moraes (@Nay-sm) · Sulamita dos Santos Nascimento (@Sulamita-star)
+**Sistema no ar:** https://adocao-animais-jade.vercel.app
 
-First, run the development server:
+## O que o sistema faz
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Plataforma web de uma ONG protetora de animais. Visitantes veem os animais disponíveis e buscam por nome ou espécie. Adotantes criam conta, entram e enviam pedidos de adoção. Administradores cadastram, editam e excluem animais (com foto) e aprovam ou rejeitam os pedidos.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Páginas para testar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Pública: `/`
+- Busca (exemplo que encontra algo): `/?busca=Cachorro`
+- Cadastro e login: `/cadastro` e `/login`
+- Protegida (pede login de administrador): `/admin`
+- Protegida (pedidos de adoção, só admin): `/admin/pedidos`
+- Versão publicada: `/api/versao`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Banco de dados
 
-## Learn More
+PostgreSQL no Neon, acessado pelo Prisma 7. Migrations em `prisma/migrations`.
 
-To learn more about Next.js, take a look at the following resources:
+- **User** (id, name, email, role `adotante`/`admin`, ...): criado pelo Better Auth. Tabelas auxiliares: Session, Account e Verification.
+- **Animal** (id, nome, especie, sexo, porte, idade, descricao, fotoUrl, status `disponivel`/`adotado`, responsavelId): o animal é cadastrado por um admin.
+- **PedidoAdocao** (id, usuarioId, animalId, telefone, moradia, experiencia, motivo, status `pendente`/`aprovado`/`rejeitado`): cada usuário só pode pedir o mesmo animal uma vez.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Relações 1 para N: User → Animal, User → PedidoAdocao e Animal → PedidoAdocao.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Como rodar no computador
 
-## Deploy on Vercel
+1. `git clone https://github.com/Nay-sm/adocao-animais.git` e `cd adocao-animais`
+2. `npm install`
+3. Copie `.env.example` para `.env` e preencha os valores.
+4. `npx prisma migrate dev` e `npx prisma generate`
+5. `npm run dev` e abra http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Como usamos a IA
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **IA usada:** Claude (Anthropic) e Chat GPT.
+- **Os 3 pedidos (prompts) que mais ajudaram:**
+  1. O prompt-mestre inicial, com a stack, as versões fixas e os fatos técnicos do Prisma 7 e do Better Auth, pedindo o planejamento antes de qualquer código.
+  2. "Antes de criar o banco, analise conosco o modelo de dados", que gerou a modelagem de Animal e PedidoAdocao e os papéis adotante/admin.
+  3. "Ligue a interface da página inicial ao banco e ao login real", que dividiu o `page.tsx` em Server Component e Client Component.
+- **Um erro da IA que percebemos e como corrigimos:** a interface da página inicial (`app/page.tsx`) simulava login, cadastro e pedido de adoção com `localStorage`, então nada era gravado no banco. Percebemos quando a contagem de usuários no Neon não subia. Corrigimos movendo o código visual para `app/HomeClient.tsx` e criando um novo `app/page.tsx` (Server Component) que lê a sessão e os animais do banco com o Prisma. O `lib/auth.ts` também não declarava o campo `role`; acrescentamos `additionalFields.role` com `input: false` para ninguém se cadastrar como admin.
+- **O que aprendemos:** que a autorização precisa ser conferida no servidor (`exigirAdmin`), que o Prisma 7 exige `prisma generate` depois da migration, que variáveis de ambiente só valem no deploy seguinte e que é preciso testar de ponta a ponta antes de aceitar o que a IA diz que funciona.
