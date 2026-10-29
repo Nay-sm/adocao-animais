@@ -1,7 +1,7 @@
 # Adote um Focinho
 
-**Nicho:** Adoção de animais (ONG protetora) · **Grupo:** <nº da planilha>
-**Dupla:** <Nome Nayara de Souza Moraes> (@Nay-sm) · <Nome Sulamita dos Santos Nascimento> (@<usuario-github-da-sulamita>)
+**Nicho:** Adoção de animais (ONG protetora) · **Grupo:** nº 5
+**Dupla:** Nayara de Souza Moraes (@Nay-sm) · Sulamita dos Santos Nascimento (@Sulamita-star)
 **Sistema no ar:** https://adocao-animais-jade.vercel.app
 
 ## O que o sistema faz
@@ -37,7 +37,7 @@ Relações 1 para N: User → Animal, User → PedidoAdocao e Animal → PedidoA
 
 ## Como usamos a IA
 
-- **IA usada:** Claude (Anthropic).
+- **IA usada:** Claude (Anthropic) e Chat GPT.
 - **Os 3 pedidos (prompts) que mais ajudaram:**
   1. O prompt-mestre inicial, com a stack, as versões fixas e os fatos técnicos do Prisma 7 e do Better Auth, pedindo o planejamento antes de qualquer código.
   2. "Antes de criar o banco, analise conosco o modelo de dados", que gerou a modelagem de Animal e PedidoAdocao e os papéis adotante/admin.
